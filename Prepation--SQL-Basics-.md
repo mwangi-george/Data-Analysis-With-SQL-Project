@@ -1,4 +1,4 @@
-Data Analysis With SQL Project
+Challenge 1 - SQL BASICS
 ================
 Mwangi George
 2022-10-10
