@@ -383,7 +383,7 @@ There are 173 records where life expectancy is greater than 75.
 
 14a. **Write a query that returns the country, year, life expectancy and
 population in thousands of people for any field with a life expectancy
-greater than 70 and before 1990. How many records are there? **
+greater than 70 and before 1990. How many records are there?**
 
 ``` sql
 SELECT  country,
