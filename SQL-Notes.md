@@ -3,6 +3,17 @@ Short Notes - SQL
 Mwangi George
 2022-10-14
 
+-   <a href="#introduction" id="toc-introduction">Introduction</a>
+-   <a href="#sub-languages-of-sql"
+    id="toc-sub-languages-of-sql">Sub-languages of SQL</a>
+-   <a href="#alter-table" id="toc-alter-table">ALTER TABLE</a>
+-   <a href="#and--or-operators" id="toc-and--or-operators">AND &amp; OR
+    Operators</a>
+-   <a href="#case-expression" id="toc-case-expression">CASE Expression</a>
+-   <a href="#creating-tables" id="toc-creating-tables">CREATING TABLES</a>
+-   <a href="#primary-and-foreign-keys"
+    id="toc-primary-and-foreign-keys">PRIMARY and FOREIGN KEYS</a>
+
 ## Introduction
 
 This markdown discusses some SQL commands and clauses I have encountered
@@ -33,13 +44,9 @@ main_conn <- dbConnect(SQLite(), "C:\\Users\\Admin\\Documents\\learningSQL\\SQl.
 dbListTables(conn = main_conn)
 ```
 
-    ##  [1] "base_data"                        "datafiniti_hotel_big_data"       
-    ##  [3] "datafiniti_hotel_reviews"         "datafiniti_hotel_reviews_Jun2019"
-    ##  [5] "datarium_marketing"               "fam_Info"                        
-    ##  [7] "laterite"                         "lemonade_stand"                  
-    ##  [9] "product_full"                     "product_info"                    
-    ## [11] "product_stats"                    "product_table"                   
-    ## [13] "product_tests"                    "products"
+    ## [1] "base_data"      "fam_Info"       "laterite"       "lemonade_stand"
+    ## [5] "product_full"   "product_info"   "product_stats"  "product_table" 
+    ## [9] "product_tests"
 
 ## Sub-languages of SQL
 
@@ -268,20 +275,57 @@ Syntax:
 ``` sql
 CREATE TABLE
 products_data
-(
-product_id INT IDENTITY(1,1) PRIMARY KEY,
-product_name VARCHAR (50) NOT NULL,
-product_type VARCHAR (50) NOT NULL,
-class VARCHAR (50) NOT NULL,
-lauch_year INT NULL
-)
+    (
+    product_id INT IDENTITY(1,1) PRIMARY KEY,
+    product_name VARCHAR (50) NOT NULL,
+    product_type VARCHAR (50) NOT NULL,
+    class VARCHAR (50) NOT NULL,
+    lauch_year INT 
+    )
 ```
 
-### Check whether the table exists in the database
+**Check whether the table exists in the database**
 
 ``` r
 dbExistsTable(conn = main_conn,
               name = "products_data")
 ```
 
-    ## [1] TRUE
+    ## [1] FALSE
+
+## PRIMARY and FOREIGN KEYS
+
+-   **The PRIMARY KEY constraint uniquely identifies each record in a
+    database table. Primary keys must contain unique values. It is
+    normal to just use running numbers, like 1, 2, 3, 4, 5, … as values
+    in Primary Key column. It is a good idea to let the system handle
+    this for you by specifying that the Primary Key should be set to
+    identity(1,1). IDENTITY(1,1) means the first value will be 1 and
+    then it will increment by 1. Each table should have a primary key,
+    and each table can have only ONE primary key. A FOREIGN KEY in one
+    table points to a PRIMARY KEY in another table.**
+
+**Examples** Using the code below, we can create a table called bands
+containing 2 columns.
+
+``` sql
+CREATE TABLE 
+      bands(
+            id INT IDENTITY(1, 1) PRIMARY KEY, 
+            name VARCHAR (50) NOT NULL
+            )
+```
+
+Using the code below, we can create a table called albums containing 4
+columns.
+
+``` sql
+CREATE TABLE 
+albums(
+      id INT IDENTITY(1,1) PRIMARY KEY,
+      name VARCHAR (50) NOT NULL,
+      release_year INT,
+      band_id INT NOT NULL,
+      FOREIGN KEY (band_id) REFERENCES bands(id)
+      )
+```
